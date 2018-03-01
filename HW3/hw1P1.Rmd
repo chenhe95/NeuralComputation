@@ -1,0 +1,50 @@
+---
+title: "Homework 3 PHYS 585"
+author: "He Chen"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Collaborators: Jonathan Levine
+
+Problem 1:
+
+a) 
+$$\tau_m \frac{dV}{dt} = a_L(V-V_L)(V-V_C)+R_mI_e \\
+  V = \alpha x + V_0, I_e = \gamma I + I_0 \\
+  \frac{dx}{dt} = \frac{a_L}{\tau_m \alpha}[(\alpha x + V_0 - V_L)(\alpha x + V_0 - V_C)] + \frac{R_mI_e}{\tau_m \alpha} \\
+  \text{Let } V_0 = \frac{V_C+V_L}{2} \\
+  \frac{dx}{dt} = \frac{a_L}{\tau_m \alpha}[(\alpha x - \frac{V_C - V_L}{2})(\alpha x + \frac{V_C - V_L}{2})] + \frac{R_m I_e}{\tau_m \alpha} \\
+  \frac{dx}{dt} = \frac{a_L}{\tau_m}\alpha x^2 - \frac{a_L}{\tau_m \alpha}(\frac{V_C - V_L}{2})^2 + \frac{R_m I_e}{\tau_m \alpha} \\
+  \text{Let } \alpha = \frac{\tau_m}{a_L} \\
+  \frac{dx}{dt} = x^2 - \alpha_L^2/\tau_m^2 (\frac{V_C-V_L}{2})^2 + \frac{R_mI_ea_L}{\tau_m^2} \\
+  \frac{dx}{dt}= x^2 - \frac{a_L^2}{\tau_m^2}(\frac{V_C-V_L}{2})^2 + \frac{R_m a_L}{\tau_m^2}\gamma I + \frac{R_m a_L}{\tau_m^2}I_0 \\
+  \text{Let } I_0 = \frac{a_L}{\tau_m R_m}(\frac{V_C - V_L}{2})^2, \gamma = \frac{\tau_m^2}{R_m a_L} \\
+  \text{Then } \frac{dx}{dt} = x^2 + I 
+$$
+
+b) $\frac{dx}{dt} = 0 = x^2 + I$
+Suppose $I = 0$, then $x = 0$
+Suppose $I < 0$, then $x = \sqrt{-I},x = -\sqrt{-I}$
+Suppose $I > 0$, then there are no solutions 
+
+c) For $x = 0, I = 0$ it is a saddle point since $dx/dt$ is of higher value on either side of $x$
+For $x = \sqrt{-I}, I < 0$, it is an unstable point since $(\epsilon + \sqrt{-I})^2 + I > 0, (-\epsilon + \sqrt{-I})^2 + I < 0$ for some small $\epsilon$
+For $x = -\sqrt{-I}, I < 0$, it is a stable point since $(\epsilon - \sqrt{-I})^2 + I < 0, (-\epsilon - \sqrt{-I})^2 + I > 0$
+
+d) It would be the saddle point $x = 0, I = 0$ and the unstable point $x = \sqrt{-I}, I < 0$. It also goes to infinity whenever $I > 0$ since $dx/dt$ would always be positive. 
+
+e) $\frac{dx}{dt} (\frac{1}{x^2 + I}) = 1$
+$x(t) = tan(t\sqrt{I} + c)\sqrt{I}, x(0) = -\infty$
+Therefore, $c = 3\pi/2$ since $\sin(3\pi/2) = -1, \cos(3\pi/2) = 0$
+$x(t) = tan(t\sqrt{I} + 3\pi/2)\sqrt{I}$
+And spikes would occur when the tangent is $\infty$ which means that $\sin(t\sqrt{I} + 3\pi/2) = 1, cos(t\sqrt{I} + 3\pi/2) = 0$
+$t\sqrt{I} + 3\pi/2 = \frac{(5 + 4k)\pi}{2}$ for some non-negative integer $k$ 
+$t\sqrt{I} = (2k + 1)\pi$
+If you fix $t$, then the values of $I$ that cause a spike are the ones which $I = (\frac{(2k+1)\pi}{t})^2$
+Likewise, fixing $I$, the time at which the spike occurs would be $t = \frac{(2k+1)\pi}{\sqrt{I}}$
+
+f) Having $t\sqrt{I} = (2k + 1)\pi$, we can see that $t\sqrt{\frac{I_e - I_0}{\gamma}} = (2k + 1)\pi$
+So the condition on $I_e$ to spike is that $I_e = (\frac{(2k+1)\pi}{t})^2 \gamma + I_0$
+Likewise, we can see that it fires every time $t\sqrt{\frac{I_e - I_0}{\gamma}}$ increases by $2\pi$. So the firing rate is such that it fires once every time $t$ changes by $\frac{2\pi}{\sqrt{\frac{I_e - I_0}{\gamma}}}$. So the overall firing rate is $1 / t = \sqrt{\frac{I_e - I_0}{\gamma}} / (2\pi)$
