@@ -1,0 +1,21 @@
+function [output] = roc_by_cell2(c, plotflag)
+    dataset = c.ecodes.data;
+    x_logical = dataset(:, 3) == 180 | dataset(:, 3) == 315 | dataset(:, 3) == 200;
+    firing_rates = [];
+    for i = 1:size(c.spikes, 1)
+        firing_rates(i) = size(c.spikes{i}  max(c.spikes{i})
+    end
+    
+    x_dist = cfind(x_logical)
+    
+    
+    y = x == dataset(:, 6);
+    x(1:5)
+    y(1:5)
+    acc = mean(dataset(:, 6));
+    acc
+    ac2 = mean(y == x)
+    ac2
+    output = rocN(x, y, size(x, 1), plotflag);
+end
+
