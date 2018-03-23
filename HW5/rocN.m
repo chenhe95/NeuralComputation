@@ -1,4 +1,4 @@
-function a = rocN(x,y,N,plotflag)
+function a = rocN(x,y,N,plotflag,holdflag,cellid)
 % ROC	computes area under ROC given distributions x and y
 %	uses N points to construct the ROC. Default is 100. 
 %	if plotflag ==1 the roc curve is drawn in the current figure. The
@@ -49,9 +49,12 @@ hit(N) = 1;
 a = trapz(fa,hit);
 % uncomment next line if you want to see the plot
 if nargin > 3
-  if plotflag == 1
+  if plotflag == 1 && holdflag == 0
     plot(fa,hit),axis('square'),xlabel('FA'),ylabel('Hit');
-    title(sprintf('ROC area = %.3f', a));
+    title(sprintf('ROC Area = %.3f', a));
+  elseif plotflag == 1 && holdflag == 1
+    hold on;
+    plot(fa,hit,'DisplayName', sprintf('Correspondence %.2f, ROC AUC %.3f', cellid, a));
   end
 end
 
