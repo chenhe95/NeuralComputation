@@ -1,5 +1,6 @@
 
 k = 1; % placeholder
+theta = pi / 3; % angle of the gratings
 
 % r = [x, y]
 phi = @(k1, k2, k3, r) ...
@@ -21,10 +22,11 @@ lambda = @(k) 4 * pi / (sqrt(3) * k);
 
 % w represents 3 parameters w = (lambda, theta, r_0)
 
-phi_w = @(r, r_0) phi(r - r_0);
+phi_w = @(r, r_0) phi(k1(k, theta), k2(k, theta), k3(k, theta), r - r_0);
 
 % Reminder, r, r_0 refers to [x, y] and [x_0, y_0] in the paper
 g_w = @(g_w_max, r, r_0) g_w_max * (2/3) * ((1/3) * phi_w(r, r_0) + 1/2);
+g_w2 = @(g_w_max, x, y, x0, y0) g_w_max * (2/3) * ((1/3) * phi_w([x, y], [x0, y0]) + 1/2);
 
 % Altered subscript w0 signals that only grid cells with a 
 % single spatial phase r0 = [0, 0] are considered lambda_lower and
@@ -36,27 +38,31 @@ A_w0 = @(f_max, g_max_w0, sigma, lambda, lambda_upper, lambda_lower, N) ...
     (2 * pi / N) * log(lambda_upper / lambda_lower);
 
 % values from the paper
-f_max = 20; % Hz
-sigma = 12; % cm
-lambda_upper = 73; % cm
-lambda_max = 2 * pi * sigma / sqrt(3);
+f_max = 45; % Hz, the paper used 20 Hz
+sigma = 5; % cm, the paper used 12
+lambda_upper = 120; % cm, the paper used 73
+lambda_max = 2 * pi * sigma / sqrt(3); % do not change
 
-xspace = linspace(-5, 5, 10);
-yspace = linspace(-5, 5, 10);
-
+% made up
+g_w_max = 10;
 C_inh = 0;
-A_w = A_w0(f_max, 20, sigma, lambda_max, lambda_upper, 0, 1);
+
+xy_max = 10;
+xy_spacing = 20;
+xspace = linspace(-xy_max, xy_max, xy_spacing);
+yspace = linspace(-xy_max, xy_max, xy_spacing);
+
+A_w = A_w0(f_max, 20, sigma, lambda_max, lambda_upper, 1, 1);
 
 activity = [];
 
 for x = 1:size(xspace, 2)
     for y = 1:size(yspace, 2)
-        activity(x, y) = net_somatic_activity(x, y, C_inh, [A_w], [g_w]);
+        activity(x, y) = net_somatic_activity(x, y, C_inh, [A_w], {g_w2}, g_w_max);
     end
 end
 
-rgb = hsv2rgb(activity);
-image(rgb);
+image(activity);
 
 
 
