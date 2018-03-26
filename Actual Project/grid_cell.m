@@ -30,7 +30,7 @@ g_w = @(g_w_max, r, r_0) g_w_max * (2/3) * ((1/3) * phi_w(r, r_0) + 1/2);
 % single spatial phase r0 = [0, 0] are considered lambda_lower and
 % lambda_upper denote the lower and upper spacing allowed in the sum
 
-A_w0 = @(f_max, g_max_w0, sigma, lambda, lambda_upper, lambda_lower) ...
+A_w0 = @(f_max, g_max_w0, sigma, lambda, lambda_upper, lambda_lower, N) ...
     (f_max / g_max_w0) * 2 * pi * sigma^2 * ...
     (exp(-(4/3) * pi^2 * sigma^2 / lambda ^2) / lambda ^2) * ...
     (2 * pi / N) * log(lambda_upper / lambda_lower);
@@ -44,6 +44,19 @@ lambda_max = 2 * pi * sigma / sqrt(3);
 xspace = linspace(-5, 5, 10);
 yspace = linspace(-5, 5, 10);
 
+C_inh = 0;
+A_w = A_w0(f_max, 20, sigma, lambda_max, lambda_upper, 0, 1);
+
+activity = [];
+
+for x = 1:size(xspace, 2)
+    for y = 1:size(yspace, 2)
+        activity(x, y) = net_somatic_activity(x, y, C_inh, [A_w], [g_w]);
+    end
+end
+
+rgb = hsv2rgb(activity);
+image(rgb);
 
 
 
