@@ -39,4 +39,20 @@ A_w0 = @(f_max, g_max_w0, sigma, lambda, lambda_upper, lambda_lower) ...
 f_max = 20; % Hz
 sigma = 12; % cm
 lambda_upper = 73; % cm
+lambda_max = 2 * pi * sigma / sqrt(3);
+
+xspace = linspace(-5, 5, 10);
+yspace = linspace(-5, 5, 10);
+
+
+
+
+
+
+
+
+
+
+
+
 
