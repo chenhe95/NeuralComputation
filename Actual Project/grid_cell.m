@@ -26,5 +26,6 @@ phi_w = @(r, r_0) phi(r - r_0);
 % Reminder, r, r_0 refers to [x, y] and [x_0, y_0] in the paper
 g_w = @(g_w_max, r, r_0) g_w_max * (2/3) * ((1/3) * phi_w(r, r_0) + 1/2);
 
-
+% The altered subscript ‘w0’ signals that only 
+% grid cells with a single spatial phase (i.e., r0 ¼ [0,0]) 
 
