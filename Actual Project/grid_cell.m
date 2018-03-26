@@ -26,6 +26,17 @@ phi_w = @(r, r_0) phi(r - r_0);
 % Reminder, r, r_0 refers to [x, y] and [x_0, y_0] in the paper
 g_w = @(g_w_max, r, r_0) g_w_max * (2/3) * ((1/3) * phi_w(r, r_0) + 1/2);
 
-% The altered subscript ‘w0’ signals that only 
-% grid cells with a single spatial phase (i.e., r0 ¼ [0,0]) 
+% Altered subscript w0 signals that only grid cells with a 
+% single spatial phase r0 = [0, 0] are considered lambda_lower and
+% lambda_upper denote the lower and upper spacing allowed in the sum
+
+A_w0 = @(f_max, g_max_w0, sigma, lambda, lambda_upper, lambda_lower) ...
+    (f_max / g_max_w0) * 2 * pi * sigma^2 * ...
+    (exp(-(4/3) * pi^2 * sigma^2 / lambda ^2) / lambda ^2) * ...
+    (2 * pi / N) * log(lambda_upper / lambda_lower);
+
+% values from the paper
+f_max = 20; % Hz
+sigma = 12; % cm
+lambda_upper = 73; % cm
 
